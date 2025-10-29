@@ -1,0 +1,7 @@
+{
+  "name": "Audio Processor AI",
+  "description": "An intelligent application that transcribes audio in real-time and then processes the text to generate structured documents like medical reports, meeting minutes, summaries, or custom formats based on user instructions.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
