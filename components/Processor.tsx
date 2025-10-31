@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ProcessingOption } from '../types';
 
 interface ProcessorProps {
@@ -16,6 +16,12 @@ const Processor: React.FC<ProcessorProps> = ({ transcription, onProcess }) => {
   const [customPrompt, setCustomPrompt] = useState<string>('');
   const [includeTranscription, setIncludeTranscription] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (selectedOption === ProcessingOption.SoloTranscripcion) {
+      setIncludeTranscription(false);
+    }
+  }, [selectedOption]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onProcess(selectedOption, customPrompt, includeTranscription);
@@ -24,7 +30,7 @@ const Processor: React.FC<ProcessorProps> = ({ transcription, onProcess }) => {
   return (
     <div className="flex flex-col h-full">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold mb-2 text-cyan-300">Transcription Ready</h2>
+        <h2 className="text-2xl font-bold mb-2 text-cyan-300">Transcripción Lista</h2>
         <div className="max-h-40 overflow-y-auto bg-gray-900/50 p-4 rounded-lg border border-gray-700">
           <p className="text-gray-300 whitespace-pre-wrap">{transcription}</p>
         </div>
@@ -32,7 +38,7 @@ const Processor: React.FC<ProcessorProps> = ({ transcription, onProcess }) => {
 
       <form onSubmit={handleSubmit} className="flex-grow flex flex-col">
         <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-3 text-gray-200">Choose Processing Mode:</h3>
+          <h3 className="text-lg font-semibold mb-3 text-gray-200">Elige el Modo de Procesamiento:</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {(Object.values(ProcessingOption) as Array<ProcessingOption>).map((option) => (
               <label
@@ -58,13 +64,13 @@ const Processor: React.FC<ProcessorProps> = ({ transcription, onProcess }) => {
         {selectedOption === ProcessingOption.Custom && (
           <div className="mb-6">
             <label htmlFor="custom-prompt" className="block text-lg font-semibold mb-2 text-gray-200">
-              Custom Instructions:
+              Instrucciones Personalizadas:
             </label>
             <textarea
               id="custom-prompt"
               value={customPrompt}
               onChange={(e) => setCustomPrompt(e.target.value)}
-              placeholder="e.g., 'Create a friendly email summarizing the key points for the team.'"
+              placeholder="Ej: 'Crea un correo electrónico amigable resumiendo los puntos clave para el equipo.'"
               rows={4}
               required
               className="w-full p-3 bg-gray-900/70 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-colors"
@@ -79,10 +85,14 @@ const Processor: React.FC<ProcessorProps> = ({ transcription, onProcess }) => {
               type="checkbox"
               checked={includeTranscription}
               onChange={(e) => setIncludeTranscription(e.target.checked)}
-              className="w-5 h-5 text-cyan-500 bg-gray-700 border-gray-500 rounded focus:ring-cyan-600"
+              disabled={selectedOption === ProcessingOption.SoloTranscripcion}
+              className="w-5 h-5 text-cyan-500 bg-gray-700 border-gray-500 rounded focus:ring-cyan-600 disabled:bg-gray-800 disabled:border-gray-600"
             />
-            <label htmlFor="include-transcription" className="ml-3 text-gray-300">
-              Add full transcription to the end of the document
+            <label 
+              htmlFor="include-transcription" 
+              className={`ml-3 ${selectedOption === ProcessingOption.SoloTranscripcion ? 'text-gray-500' : 'text-gray-300'}`}
+            >
+              Añadir transcripción completa al final del documento
             </label>
           </div>
 
@@ -90,7 +100,7 @@ const Processor: React.FC<ProcessorProps> = ({ transcription, onProcess }) => {
             type="submit"
             className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-500/50"
           >
-            Generate Document
+            Generar Documento
           </button>
         </div>
       </form>

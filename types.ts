@@ -10,5 +10,6 @@ export enum ProcessingOption {
   Medical = 'Consulta Médica',
   Meeting = 'Reunión de Trabajo',
   Summary = 'Resumen Simple',
+  SoloTranscripcion = 'Solo Transcripción',
   Custom = 'Personalizado',
 }

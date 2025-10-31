@@ -155,6 +155,10 @@ export const processTranscription = async (
 ): Promise<string> => {
   if (!transcription) return '';
 
+  if (option === ProcessingOption.SoloTranscripcion) {
+    return transcription;
+  }
+
   const prompt = getPromptForOption(option, transcription, customPrompt);
   
   try {
@@ -176,7 +180,7 @@ export const processTranscription = async (
     return generatedText;
   } catch (error) {
     console.error('Error generating content from Gemini:', error);
-    throw new Error('Failed to process transcription with Gemini API.');
+    throw new Error('No se pudo procesar la transcripción con la API de Gemini.');
   }
 };
 
@@ -185,7 +189,7 @@ export const transcribeAudioFile = async (
   mimeType: string,
 ): Promise<string> => {
   if (!base64Audio || !mimeType) {
-    throw new Error('Audio data or mime type is missing.');
+    throw new Error('Faltan los datos de audio o el tipo MIME.');
   }
 
   const audioPart = {
@@ -207,6 +211,6 @@ export const transcribeAudioFile = async (
     return response.text;
   } catch (error) {
     console.error('Error transcribing audio file with Gemini:', error);
-    throw new Error('Failed to transcribe audio file with Gemini API.');
+    throw new Error('No se pudo transcribir el archivo de audio con la API de Gemini.');
   }
 };

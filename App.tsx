@@ -19,7 +19,7 @@ const App: React.FC = () => {
       setAppState(AppState.ReadyToProcess);
       setError(null);
     } else {
-      setError('Transcription failed or the audio was empty. Please try again.');
+      setError('La transcripción falló o el audio estaba vacío. Por favor, inténtalo de nuevo.');
       setAppState(AppState.ReadyToUpload);
     }
   }, []);
@@ -42,7 +42,7 @@ const App: React.FC = () => {
       setAppState(AppState.Complete);
     } catch (err) {
       console.error(err);
-      setError(err instanceof Error ? err.message : 'An unknown error occurred during processing.');
+      setError(err instanceof Error ? err.message : 'Ocurrió un error desconocido durante el procesamiento.');
       setAppState(AppState.ReadyToProcess);
     }
   }, [transcription]);
@@ -67,7 +67,7 @@ const App: React.FC = () => {
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <p className="text-lg text-gray-300">AI is analyzing and generating your document...</p>
+            <p className="text-lg text-gray-300">La IA está analizando y generando tu documento...</p>
           </div>
         );
       case AppState.Complete:
@@ -85,7 +85,7 @@ const App: React.FC = () => {
             Audio Processor AI
           </h1>
           <p className="text-gray-400 mt-2 text-lg">
-            Upload, Transcribe, and Transform Your Audio into Structured Documents.
+            Sube, Transcribe y Transforma tu Audio en Documentos Estructurados.
           </p>
         </header>
 

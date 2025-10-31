@@ -1,7 +1,5 @@
 {
-  "name": "Audio Processor AI",
-  "description": "An intelligent application that transcribes audio in real-time and then processes the text to generate structured documents like medical reports, meeting minutes, summaries, or custom formats based on user instructions.",
-  "requestFramePermissions": [
-    "microphone"
-  ]
+  "name": "Procesador de Audio con IA",
+  "description": "Una aplicación inteligente que transcribe archivos de audio y luego procesa el texto para generar documentos estructurados como informes médicos, actas de reuniones, resúmenes o formatos personalizados según las instrucciones del usuario.",
+  "requestFramePermissions": []
 }

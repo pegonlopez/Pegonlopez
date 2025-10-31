@@ -17,7 +17,7 @@ const Recorder: React.FC<RecorderProps> = ({ onRecordingComplete }) => {
     }
 
     if (file.type !== 'audio/mpeg') {
-      setError('Please upload a valid MP3 file.');
+      setError('Por favor, sube un archivo MP3 válido.');
       if (event.target) event.target.value = '';
       return;
     }
@@ -35,7 +35,7 @@ const Recorder: React.FC<RecorderProps> = ({ onRecordingComplete }) => {
           onRecordingComplete(transcription);
         } catch (err) {
           console.error('Transcription error:', err);
-          setError(err instanceof Error ? err.message : 'Failed to transcribe the audio file.');
+          setError(err instanceof Error ? err.message : 'No se pudo transcribir el archivo de audio.');
         } finally {
           setIsUploading(false);
           if (event.target) event.target.value = '';
@@ -43,14 +43,14 @@ const Recorder: React.FC<RecorderProps> = ({ onRecordingComplete }) => {
       };
       reader.onerror = () => {
         console.error('File reader error');
-        setError('Failed to read the audio file.');
+        setError('No se pudo leer el archivo de audio.');
         setIsUploading(false);
         if (event.target) event.target.value = '';
       };
       reader.readAsDataURL(file);
     } catch (err) {
       console.error(err);
-      setError(err instanceof Error ? err.message : 'An error occurred during file processing.');
+      setError(err instanceof Error ? err.message : 'Ocurrió un error durante el procesamiento del archivo.');
       setIsUploading(false);
       if (event.target) event.target.value = '';
     }
@@ -66,20 +66,20 @@ const Recorder: React.FC<RecorderProps> = ({ onRecordingComplete }) => {
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <p className="text-lg text-gray-300">Uploading and Transcribing Audio...</p>
+            <p className="text-lg text-gray-300">Subiendo y Transcribiendo Audio...</p>
         </div>
       ) : (
         <div className="flex flex-col items-center text-center">
-            <h2 className="text-2xl font-semibold text-gray-200 mb-4">Upload Your Audio</h2>
+            <h2 className="text-2xl font-semibold text-gray-200 mb-4">Sube tu Audio</h2>
             <p className="text-gray-400 mb-8 max-w-md">
-                Select an MP3 audio file from your device to transcribe and process.
+                Selecciona un archivo de audio MP3 de tu dispositivo para transcribirlo y procesarlo.
             </p>
             <label
               htmlFor="audio-upload"
               className={`py-3 px-8 rounded-lg font-semibold transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 text-lg
               ${isUploading ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'bg-cyan-500 text-white hover:bg-cyan-600 focus:ring-cyan-500/50 cursor-pointer shadow-lg shadow-cyan-500/30'}`}
             >
-                Select MP3 File
+                Seleccionar Archivo MP3
             </label>
             <input
                 type="file"
