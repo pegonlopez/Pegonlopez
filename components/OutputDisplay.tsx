@@ -61,12 +61,16 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ content, onReset }) => {
   };
   
   const handleExportPdf = async () => {
-    if (!contentRef.current || !window.jspdf) {
+    const contentElement = contentRef.current;
+    if (!contentElement || !window.jspdf) {
         alert('La librería de generación de PDF no está disponible.');
         return;
     }
     setIsExporting('PDF');
     setIsExportMenuOpen(false);
+    
+    // Temporarily switch to light mode styles for PDF generation
+    contentElement.classList.remove('prose-invert');
     
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({
@@ -75,15 +79,17 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ content, onReset }) => {
         format: 'a4',
     });
 
-    await doc.html(contentRef.current, {
+    await doc.html(contentElement, {
         callback: function (doc) {
             doc.save('documento.pdf');
+            // Restore dark mode styles after generation is complete
+            contentElement.classList.add('prose-invert');
             setIsExporting(null);
         },
         x: 15,
         y: 15,
         width: 180, // A4 width is 210mm, so 180mm with 15mm margins on each side
-        windowWidth: contentRef.current.scrollWidth,
+        windowWidth: contentElement.scrollWidth,
     });
   };
 
